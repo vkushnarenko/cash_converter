@@ -16,6 +16,7 @@ RSpec.describe CashConverter do
     CashConverter.configure do |config|
       config.base = "EUR"
       config.date = "2017-06-28"
+      #for proper work base currency with rate 1 should be added too
       config.rates =  {
           "AUD" => 1.4986,
           "BGN" => 1.9558,

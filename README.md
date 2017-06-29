@@ -32,14 +32,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/cash_converter.
+Bug reports and pull requests are welcome on GitHub at https://github.com/vkushnarenko/cash_converter.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-## Literature
-http://guides.rubygems.org/name-your-gem/
-https://quickleft.com/blog/engineering-lunch-series-step-by-step-guide-to-building-your-first-ruby-gem/
-http://fixer.io/
