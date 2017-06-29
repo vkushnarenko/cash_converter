@@ -66,4 +66,30 @@ RSpec.describe CashConverter do
     expect {CashConverter.config.unknown_attribute}.to raise_error(NoMethodError)
   end
 
+  it "can be instantinated" do
+    fifty_eur = CashConverter::Money.new(50, 'EUR')
+    expect(fifty_eur.amount).to   eq(50)
+    expect(fifty_eur.currency).to eq("EUR")
+    expect(fifty_eur.inspect).to  eq("50.00 EUR")
+  end
+
+  it "can`t be instantinated with unknown currency" do
+    expect {fifty_eur = CashConverter::Money.new(50, 'China')}.to raise_error(CashConverter::NoSuchCurrency)
+  end
+
+  it "can convert from one currency to anoter" do
+    fifty_eur = CashConverter::Money.new(50, 'EUR')
+    expect(fifty_eur.convert_to('USD').inspect).to  eq("56.87 USD")
+  end
+
+  it "converter returns error if no target currency exists" do
+    fifty_eur = CashConverter::Money.new(50, 'EUR')
+    expect {fifty_eur.convert_to('China')}.to raise_error(CashConverter::NoSuchCurrency)
+  end
+
+  it "converter returns object not a string" do
+    fifty_eur = CashConverter::Money.new(50, 'EUR')
+    expect(fifty_eur.convert_to('USD')).to be_an_instance_of(CashConverter::Money)
+  end
+
 end

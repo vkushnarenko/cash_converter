@@ -39,5 +39,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
-##Literature
+## Literature
 http://guides.rubygems.org/name-your-gem/
+https://quickleft.com/blog/engineering-lunch-series-step-by-step-guide-to-building-your-first-ruby-gem/
+http://fixer.io/
