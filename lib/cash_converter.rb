@@ -43,7 +43,7 @@ module CashConverter
 
    def initialize(amount, currency)
      @amount=BigDecimal(amount.to_s).truncate(2)
-     #can work only with currencies set in cofigs currency hash
+     #can work only with currencies set in cofigs' currency hash
      if CashConverter.config.rates.has_key? currency
        @currency=currency
        else raise NoSuchCurrency
@@ -53,13 +53,13 @@ module CashConverter
 
    def inspect
      amount_string = @amount.to_s("F")
-     #this is to show 00 after the decimal point, if there is only 1 symbol after it adds 0
+     #adds additional 0 after decimal point, if we have only 1 digit there. ".00"
      amount_string += "0" if amount_string.split('.')[1].length == 1
      "#{amount_string} #{@currency}"
    end
 
   def convert_to(target)
-    #as we can work only with currencies defined in config raises error
+    #raises error when, user tries to convert to unknown currency
     raise NoSuchCurrency unless CashConverter.config.rates.has_key? target
 
     if @currency !=  CashConverter.config.base
@@ -73,7 +73,7 @@ module CashConverter
 
 
    private
-   #this method is for arifmetics, when he catches somthing beside Money class object, he converts it to left side currency
+   #this method is for arithmetic, when it catches something besides Money object, it converts it to (left side.currency) object
    def return_instance(object)
      if object.instance_of? Money
        other = object.convert_to(self.currency)

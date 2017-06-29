@@ -90,17 +90,17 @@ RSpec.describe CashConverter do
     expect(fifty_eur.convert_to('USD').inspect).to  eq("55.50 USD")
   end
 
-  it "converter returns error if no target currency exists" do
+  it "converter returns error if target currency doesn`t exist" do
     fifty_eur = CashConverter::Money.new(50, 'EUR')
     expect {fifty_eur.convert_to('China')}.to raise_error(CashConverter::NoSuchCurrency)
   end
 
-  it "converter returns object not a string" do
+  it "converter returns object instead of string" do
     fifty_eur = CashConverter::Money.new(50, 'EUR')
     expect(fifty_eur.convert_to('USD')).to be_an_instance_of(CashConverter::Money)
   end
 
-  it "compares objects to one another" do
+  it "compares objects one to another" do
     twenty_dollars = CashConverter::Money.new(20, 'USD')
     fifty_eur = CashConverter::Money.new(50, 'EUR')
 
