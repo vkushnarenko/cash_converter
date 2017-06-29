@@ -111,6 +111,17 @@ RSpec.describe CashConverter do
 
     expect(twenty_dollars > CashConverter::Money.new(5, 'USD')).to  be true  # => true
     expect(twenty_dollars < fifty_eur).to  be true            # => true
+  end
+
+  it "can do arithmetics" do
+    # Arithmetics:
+    twenty_dollars = CashConverter::Money.new(20, 'USD')
+    fifty_eur = CashConverter::Money.new(50, 'EUR')
+
+    expect((fifty_eur + twenty_dollars).inspect).to eq("68.01 EUR") # => 68.01 EUR
+    expect((fifty_eur - twenty_dollars).inspect).to eq("31.99 EUR") # => 31.98 EUR
+    expect((fifty_eur / 2).inspect).to eq("25.00 EUR")              # => 25 EUR
+    expect((twenty_dollars * 3).inspect).to eq("60.00 USD")        # => 60 USD
 
   end
 

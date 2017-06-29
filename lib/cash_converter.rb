@@ -24,6 +24,31 @@ module CashConverter
 
    end
 
+   def +(anOther)
+
+     Money.new(self.amount + return_instance(anOther).amount, self.currency )
+
+   end
+
+   def -(anOther)
+
+     Money.new(self.amount - return_instance(anOther).amount, self.currency )
+
+   end
+
+   def *(anOther)
+
+     Money.new(self.amount * return_instance(anOther).amount, self.currency )
+
+   end
+
+   def /(anOther)
+
+     Money.new(self.amount / return_instance(anOther).amount, self.currency )
+
+   end
+     
+
    def initialize(amount, currency)
      @amount=BigDecimal(amount.to_s).truncate(2)
 
@@ -50,6 +75,17 @@ module CashConverter
 
     Money.new(amount,target)
   end
+
+
+   private
+   def return_instance(object)
+     if object.instance_of? Money
+       other = object.convert_to(self.currency)
+     else
+       other = Money.new(object,self.currency)
+     end
+    other
+   end
 
  end
 
