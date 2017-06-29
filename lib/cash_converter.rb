@@ -10,9 +10,15 @@ module CashConverter
     def initialize
       self.base = "EUR"
       self.date =  Date.today.to_s
-      url = URI("http://api.fixer.io/latest")
-      body = Net::HTTP.get(url)
-      self.rates=JSON.parse(body)["rates"]
+      begin
+        url = URI("http://api.fixer.io/latest")
+        body = Net::HTTP.get(url)
+        self.rates=JSON.parse(body)["rates"]
+      rescue Exception => e
+        puts e.message
+        puts e.backtrace.inspect
+        puts "Please set up rates via config"
+      end
     end
   end
 
