@@ -78,8 +78,15 @@ RSpec.describe CashConverter do
   end
 
   it "can convert from one currency to anoter" do
+    CashConverter.configure do |config|
+      config.base = "EUR"
+      config.date = "2017-06-28"
+      config.rates =  {
+          "EUR" => 1,
+          "USD" => 1.11}
+      end
     fifty_eur = CashConverter::Money.new(50, 'EUR')
-    expect(fifty_eur.convert_to('USD').inspect).to  eq("56.87 USD")
+    expect(fifty_eur.convert_to('USD').inspect).to  eq("55.50 USD")
   end
 
   it "converter returns error if no target currency exists" do
@@ -90,6 +97,21 @@ RSpec.describe CashConverter do
   it "converter returns object not a string" do
     fifty_eur = CashConverter::Money.new(50, 'EUR')
     expect(fifty_eur.convert_to('USD')).to be_an_instance_of(CashConverter::Money)
+  end
+
+  it "compares objects to one another" do
+    twenty_dollars = CashConverter::Money.new(20, 'USD')
+    fifty_eur = CashConverter::Money.new(50, 'EUR')
+
+    expect(twenty_dollars == CashConverter::Money.new(20, 'USD')).to be true  # => true
+    expect(twenty_dollars == CashConverter::Money.new(30, 'USD')).to be false # => false
+
+    fifty_eur_in_usd = fifty_eur.convert_to('USD')
+    expect(fifty_eur_in_usd == fifty_eur).to  be true         # => true
+
+    expect(twenty_dollars > CashConverter::Money.new(5, 'USD')).to  be true  # => true
+    expect(twenty_dollars < fifty_eur).to  be true            # => true
+
   end
 
 end

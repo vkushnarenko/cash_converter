@@ -8,7 +8,21 @@ module CashConverter
 
  class Money
 
+   include Comparable
+
    attr_reader :amount, :currency
+
+   def <=>(anOther)
+
+     left_amount=self.amount
+     right_amount=anOther.amount
+
+     left_amount= self.convert_to( CashConverter.config.base).amount  if self.currency !=  CashConverter.config.base
+     right_amount=anOther.convert_to( CashConverter.config.base).amount  if self.currency !=  CashConverter.config.base
+
+     left_amount <=> right_amount
+
+   end
 
    def initialize(amount, currency)
      @amount=BigDecimal(amount.to_s).truncate(2)
@@ -28,7 +42,12 @@ module CashConverter
 
   def convert_to(target)
     raise NoSuchCurrency unless CashConverter.config.rates.has_key? target
-    amount = @amount * CashConverter.config.rates[target]
+    if @currency !=  CashConverter.config.base
+      amount =(@amount/CashConverter.config.rates[@currency]) * CashConverter.config.rates[target]
+    else
+      amount =   @amount * CashConverter.config.rates[target]
+    end
+
     Money.new(amount,target)
   end
 
